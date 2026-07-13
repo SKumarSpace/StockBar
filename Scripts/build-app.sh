@@ -38,6 +38,30 @@ cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 # Optional: drop an AppIcon.icns into Resources/ and uncomment to bundle it.
 # cp "$ROOT/Resources/AppIcon.icns" "$APP/Contents/Resources/AppIcon.icns"
 
+# Stamp the version from the release tag. Precedence: an explicit VERSION, the
+# tag CI is building (GITHUB_REF_NAME), then the nearest local tag. Only the
+# bundled copy is edited -- Resources/Info.plist stays at its placeholder, so
+# the tag remains the single source of truth. Must run before codesign, which
+# seals Info.plist.
+RAW_VERSION="${VERSION:-${GITHUB_REF_NAME:-$(git -C "$ROOT" describe --tags --abbrev=0 2>/dev/null || echo "")}}"
+RAW_VERSION="${RAW_VERSION#v}"
+
+# CFBundleShortVersionString must be 1-3 dot-separated integers; anything else
+# (a branch name, an empty repo) falls back rather than producing a bad bundle.
+SHORT_VERSION="$(printf '%s' "$RAW_VERSION" | grep -oE '^[0-9]+(\.[0-9]+){0,2}' || true)"
+if [[ -z "$SHORT_VERSION" ]]; then
+    SHORT_VERSION="0.0.0"
+    echo "==> No usable version tag; stamping $SHORT_VERSION"
+fi
+
+# Monotonic build number, so two builds of the same version stay distinguishable.
+# CI checks out shallow, where rev-list would always say 1, so prefer the run number.
+BUILD_NUMBER="${GITHUB_RUN_NUMBER:-$(git -C "$ROOT" rev-list --count HEAD 2>/dev/null || echo 1)}"
+
+echo "==> Stamping version $SHORT_VERSION (build $BUILD_NUMBER)"
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $SHORT_VERSION" "$APP/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$APP/Contents/Info.plist"
+
 if [[ -n "${SIGN_ID:-}" ]]; then
     echo "==> Code signing with: $SIGN_ID"
     codesign --force --options runtime --timestamp \
