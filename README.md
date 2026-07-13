@@ -19,24 +19,28 @@ when it's closed.
 
 ### Download (recommended)
 
-1. Grab `StockBar.zip` from the [latest release](../../releases/latest).
-2. Unzip and drag **StockBar.app** to `/Applications`.
-3. Launch it. The price appears in your menu bar.
+**[⬇ Download StockBar](https://github.com/SKumarSpace/StockBar/releases/latest/download/StockBar.zip)** — macOS 13+, Apple Silicon & Intel
 
-> If the build is **not** notarized, macOS Gatekeeper will warn on first launch.
-> Right-click the app → **Open** → **Open**, or run:
-> `xattr -dr com.apple.quarantine /Applications/StockBar.app`
+1. Unzip and drag **StockBar.app** to `/Applications`.
+2. Double-click to launch. The price appears in your menu bar.
+
+That's it — no security warnings. Releases are signed with a Developer ID
+certificate and notarized by Apple, so Gatekeeper opens them normally.
 
 ### Build from source
 
 Requires the Xcode command line tools (`xcode-select --install`) or Xcode.
 
 ```sh
-git clone https://github.com/<you>/StockBar.git
+git clone https://github.com/SKumarSpace/StockBar.git
 cd StockBar
 swift run                 # run directly for development
 ./Scripts/build-app.sh    # produce dist/StockBar.app + dist/StockBar.zip
 ```
+
+A build from source is only ad-hoc signed, not notarized — so macOS will warn
+on first launch. Right-click the app → **Open** → **Open**, or run
+`xattr -dr com.apple.quarantine /Applications/StockBar.app`.
 
 ## Distribution (signing & notarization)
 
@@ -70,7 +74,18 @@ to a GitHub Release. Set these repository **secrets**:
 | `NOTARY_TEAM_ID` | your 10-char Team ID |
 | `NOTARY_PASSWORD` | an app-specific password |
 
-Your website can link straight to the release asset URL.
+### Linking from a website
+
+This URL always resolves to the newest release's asset, so it never needs
+updating when you cut a new version:
+
+```
+https://github.com/SKumarSpace/StockBar/releases/latest/download/StockBar.zip
+```
+
+Notarization tickets are **stapled** into the app, so it opens cleanly even if
+the user is offline — the download can be hosted anywhere (your own site, a
+CDN), not just GitHub.
 
 ## How it works
 
