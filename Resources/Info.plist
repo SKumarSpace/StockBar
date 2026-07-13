@@ -10,6 +10,8 @@
     <string>com.shrey.stockbar</string>
     <key>CFBundleExecutable</key>
     <string>StockBar</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <!-- Placeholders: Scripts/build-app.sh stamps these from the release tag. -->

@@ -1,3 +1,5 @@
+<img src="docs/icon.png" alt="StockBar icon" width="120" align="left">
+
 # StockBar
 
 A tiny macOS **menu bar** app that shows a stock's price from Yahoo Finance.

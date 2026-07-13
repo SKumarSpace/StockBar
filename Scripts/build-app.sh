@@ -35,8 +35,7 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BUILD_DIR/$APP_NAME" "$APP/Contents/MacOS/$APP_NAME"
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 
-# Optional: drop an AppIcon.icns into Resources/ and uncomment to bundle it.
-# cp "$ROOT/Resources/AppIcon.icns" "$APP/Contents/Resources/AppIcon.icns"
+cp "$ROOT/Resources/AppIcon.icns" "$APP/Contents/Resources/AppIcon.icns"
 
 # Stamp the version from the release tag. Precedence: an explicit VERSION, the
 # tag CI is building (GITHUB_REF_NAME), then the nearest local tag. Only the
