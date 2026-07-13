@@ -5,8 +5,6 @@ No Dock icon, no windows — just the price in your menu bar. Updates every
 minute while the US market is open, and goes quiet (showing the last close)
 when it's closed.
 
-![menu bar screenshot](docs/screenshot.png)
-
 ## Features
 
 - Live price in the menu bar, e.g. `MU ▲ 98.42` (green up / red down)
