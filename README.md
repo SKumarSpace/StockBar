@@ -5,10 +5,18 @@ No Dock icon, no windows — just the price in your menu bar. Updates every
 minute while the US market is open, and goes quiet (showing the last close)
 when it's closed.
 
+<img src="docs/menu.png" alt="StockBar menu bar item with its menu open" width="310">
+
 ## Features
 
-- Live price in the menu bar, e.g. `MU ▲ 98.42` (green up / red down)
-- Refreshes every 60 seconds during market hours; skips updates when closed
+- Live price in the menu bar — green ▲ when up, red ▼ when down:
+
+  <img src="docs/up.png" alt="NVDA up, shown in green" width="136">
+  <img src="docs/down.png" alt="AAPL down, shown in red" width="133">
+
+- Click for the day's change, percent, and previous close
+- Refreshes every 60 seconds during market hours; skips updates when closed,
+  and greys out the price to show it's a stale close
 - Pick any symbol from the menu (**Set Ticker…**) — defaults to `MU`
 - **Launch at Login** toggle
 - Pure menu-bar agent (`LSUIElement`) — no Dock icon, no main window

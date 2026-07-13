@@ -19,7 +19,7 @@
 set -euo pipefail
 
 APP_NAME="StockBar"
-BUNDLE_ID="com.skumar.stockbar"
+BUNDLE_ID="com.shrey.stockbar"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # Universal build outputs here (not .build/release, which is single-arch).
 BUILD_DIR="$ROOT/.build/apple/Products/Release"
